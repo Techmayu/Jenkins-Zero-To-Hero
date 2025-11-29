@@ -1,34 +1,12 @@
 pipeline {
-    agent any
-
-    stages {
-        stage('Checkout') {
-            steps {
-                echo "Repo cloned successfully"
-            }
-        }
-        stage('Build') {
-            steps {
-                echo "Build Stage"
-            }
-        }
+  agent {
+    docker { image 'node:16-alpine' }
+  }
+  stages {
+    stage('Test') {
+      steps {
+        sh 'node --version'
+      }
     }
+  }
 }
-
-    stages {
-        stage('Checkout') {
-            steps {
-                git branch: 'main', url: 'https://github.com/Techmayu/Jenkins-Zero-To-Hero.git'
-            }
-        }
-
-        stage('Build') {
-            steps {
-                dir('my-first-pipeline') {   // go inside subfolder
-                    bat 'mvn clean install'
-                }
-            }
-        }
-    }
-}
-  
