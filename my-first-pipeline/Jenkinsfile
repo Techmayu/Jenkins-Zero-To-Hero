@@ -1,5 +1,5 @@
 pipeline {
-  agent {
+  agent any{
     docker { image 'node:16-alpine' }
   }
   stages {
@@ -9,4 +9,21 @@ pipeline {
       }
     }
   }
+}
+
+    stages {
+        stage('Checkout') {
+            steps {
+                git branch: 'main', url: 'https://github.com/Techmayu/Jenkins-Zero-To-Hero.git'
+            }
+        }
+
+        stage('Build') {
+            steps {
+                dir('my-first-pipeline') {   // go inside subfolder
+                    bat 'mvn clean install'
+                }
+            }
+        }
+    }
 }
